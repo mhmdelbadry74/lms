@@ -1,0 +1,17 @@
+[
+  {
+    "name": "John Doe",
+    "screname_en": "@johndoe",
+    "id_str": "123456789"
+  },
+  {
+    "name": "Jane Smith",
+    "screname_en": "@janesmith",
+    "id_str": "987654321"
+  },
+  {
+    "name": "Bob Johnson",
+    "screname_en": "@bobjohnson",
+    "id_str": "2468101214"
+  }
+]
