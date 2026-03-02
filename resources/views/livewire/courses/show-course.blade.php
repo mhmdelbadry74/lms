@@ -7,22 +7,40 @@
             <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
                 <span class="badge badge-brand">{{ $course->level }}</span>
                 <span class="badge badge-success">{{ $course->status }}</span>
+                <span class="badge" style="background:rgba(15,118,110,0.08); color:var(--brand-strong);">{{ $course->lessons->count() }} lessons</span>
             </div>
             <h1 style="margin:0.9rem 0 0; font-size:2.1rem;">{{ $course->title }}</h1>
             <p class="muted" style="margin:0.75rem 0 0;">Track lessons, enroll once, and keep completion state logically consistent even if the curriculum changes later.</p>
 
-            @auth
-                @if ($course->enrollments->where('user_id', auth()->id())->isNotEmpty())
-                    <p style="margin-top:1rem;" class="badge badge-success">Enrolled</p>
+            <div class="grid-auto" style="margin-top:1.25rem;">
+                <div class="metric">
+                    <strong>{{ $course->requiredLessons()->count() }}</strong>
+                    <span class="muted">Required lessons</span>
+                </div>
+                <div class="metric">
+                    <strong>{{ $course->lessons->where('is_preview', true)->count() }}</strong>
+                    <span class="muted">Preview lessons</span>
+                </div>
+                <div class="metric">
+                    <strong>{{ $course->lessons->where('is_required', false)->count() }}</strong>
+                    <span class="muted">Optional lessons</span>
+                </div>
+            </div>
+
+            <div style="margin-top:1.15rem;">
+                @auth
+                    @if ($course->enrollments->where('user_id', auth()->id())->isNotEmpty())
+                        <p class="badge badge-success">Enrolled</p>
+                    @else
+                        <form method="POST" action="{{ route('courses.enroll', $course->slug) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Enroll</button>
+                        </form>
+                    @endif
                 @else
-                    <form method="POST" action="{{ route('courses.enroll', $course->slug) }}" style="margin-top:1rem;">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Enroll</button>
-                    </form>
-                @endif
-            @else
-                <p class="muted" style="margin-top:1rem;">Sign in to enroll and mark lessons complete.</p>
-            @endauth
+                    <p class="muted">Sign in to enroll and mark lessons complete.</p>
+                @endauth
+            </div>
         </div>
     </div>
 

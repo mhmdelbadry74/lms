@@ -53,3 +53,4 @@ docker compose exec app php artisan test
 - `vendor/` is already present so the app can boot without downloading dependencies again.
 - Livewire is installed and the UI uses Alpine-compatible directives. A dedicated frontend build step is not required for the current reviewer flow.
 - The challenge requested Pest. The current environment had no package registry access, so the implemented automated coverage is PHPUnit-based while targeting the exact same integrity scenarios.
+- A ready-to-record Arabic walkthrough script is available in `docs/VIDEO_WALKTHROUGH_AR.md`.

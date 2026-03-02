@@ -14,7 +14,17 @@
     <a href="{{ route('courses.show', $course->slug) }}" style="font-weight:700; color:var(--accent);">Back to course</a>
 
     <div class="panel" style="padding:1.5rem;">
-        <p class="badge badge-brand">Lesson {{ $lesson->position }}</p>
+        <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <p class="badge badge-brand">Lesson {{ $lesson->position }}</p>
+            @if ($lesson->is_required)
+                <span class="badge badge-success">Required</span>
+            @else
+                <span class="badge" style="background:rgba(14,165,233,0.08); color:var(--accent);">Optional</span>
+            @endif
+            @if ($lesson->is_preview)
+                <span class="badge" style="background:rgba(20,184,166,0.08); color:var(--brand);">Preview</span>
+            @endif
+        </div>
         <h1 style="margin:0.9rem 0 0; font-size:2rem;">{{ $lesson->title }}</h1>
         <p class="muted" style="margin:0.75rem 0 0;">Plyr placeholder is mounted inside Alpine lifecycle hooks. Replace the placeholder block with the real player asset when bundling frontend assets.</p>
 
@@ -25,17 +35,27 @@
         </div>
     </div>
 
-    <div class="panel" style="padding:1.5rem;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-            <div>
-                <h2 style="margin:0; font-size:1.15rem;">Course Progress</h2>
-                <p class="muted" style="margin:0.4rem 0 0;">Based on completed required lessons only.</p>
+    <div class="grid-auto">
+        <div class="panel" style="padding:1.5rem;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+                <div>
+                    <h2 style="margin:0; font-size:1.15rem;">Course Progress</h2>
+                    <p class="muted" style="margin:0.4rem 0 0;">Based on completed required lessons only.</p>
+                </div>
+                <strong x-text="`${shownProgress}%`"></strong>
             </div>
-            <strong x-text="`${shownProgress}%`"></strong>
+
+            <div style="margin-top:1rem; height:0.8rem; border-radius:999px; background:var(--panel-muted); overflow:hidden;">
+                <div style="height:100%; background:linear-gradient(90deg, var(--brand), var(--accent)); transition:width 500ms ease;" x-bind:style="`width:${shownProgress}%`"></div>
+            </div>
         </div>
 
-        <div style="margin-top:1rem; height:0.8rem; border-radius:999px; background:var(--panel-muted); overflow:hidden;">
-            <div style="height:100%; background:linear-gradient(90deg, var(--brand), var(--accent)); transition:width 500ms ease;" x-bind:style="`width:${shownProgress}%`"></div>
+        <div class="panel" style="padding:1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+            <div>
+                <h2 style="margin:0; font-size:1.15rem;">Progress Rules</h2>
+                <p class="muted" style="margin:0.4rem 0 0;">Only required lessons affect completion. Optional lessons stay outside the completion threshold.</p>
+            </div>
+            <strong>{{ $course->requiredLessons()->count() }}</strong>
         </div>
     </div>
 

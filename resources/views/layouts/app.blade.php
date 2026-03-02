@@ -42,12 +42,21 @@
         .shell { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1rem; }
         .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06); }
         .muted { color: var(--muted); }
+        .eyebrow { margin: 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+        .hero-title { margin: 0.8rem 0 0; font-size: clamp(2.3rem, 4vw, 4.4rem); line-height: 0.96; letter-spacing: -0.04em; }
+        .grid-auto { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 0.9rem; padding: 0.7rem 1rem; font-weight: 700; border: 1px solid var(--line); cursor: pointer; background: transparent; color: var(--text); }
         .btn-primary { background: var(--brand); color: white; border-color: transparent; }
         .btn-primary:hover { background: var(--brand-strong); }
+        .btn-ghost { border-color: transparent; background: rgba(14, 165, 233, 0.08); color: var(--accent); }
         .badge { display: inline-block; border-radius: 999px; padding: 0.25rem 0.65rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
         .badge-brand { background: rgba(14, 165, 233, 0.12); color: var(--accent); }
         .badge-success { background: rgba(20, 184, 166, 0.12); color: var(--brand); }
+        .metric { padding: 1rem; border-radius: 1.2rem; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(248,250,252,0.9)); }
+        .metric strong { display: block; font-size: 1.8rem; line-height: 1; margin-bottom: 0.3rem; }
+        [data-theme="dark"] .metric { background: linear-gradient(180deg, rgba(31,41,55,0.7), rgba(17,24,39,0.9)); }
+        .card-link { transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease; }
+        .card-link:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12); border-color: rgba(14, 165, 233, 0.28); }
         input { width: 100%; border-radius: 0.9rem; border: 1px solid var(--line); padding: 0.75rem 0.9rem; background: var(--panel); color: var(--text); }
     </style>
     @livewireStyles
@@ -58,7 +67,7 @@
             <a href="{{ route('home') }}" style="font-size:1.125rem; font-weight:800;">LMS Task</a>
 
             <nav style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; font-size:0.95rem; font-weight:700;">
-                <button type="button" class="btn" x-on:click="darkMode = !darkMode">
+                <button type="button" class="btn btn-ghost" x-on:click="darkMode = !darkMode">
                     <span x-text="darkMode ? 'Light mode' : 'Dark mode'"></span>
                 </button>
                 @auth
